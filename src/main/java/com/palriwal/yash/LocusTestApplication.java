@@ -1,34 +1,36 @@
 package com.palriwal.yash;
 
-import com.palriwal.yash.dto.GoogleDirectionsRequest;
-import com.palriwal.yash.dto.GoogleDirectionsResponse;
-import com.palriwal.yash.dto.LatLng;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.palriwal.yash.dto.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import java.lang.String;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.ws.rs.client.ClientBuilder;
 
 public class LocusTestApplication{
+    private ObjectMapper objectMapper = new ObjectMapper();
     public static void main(String[] args) throws Exception{
         LocusTestApplication locusTestApplication = new LocusTestApplication();
-        LatLng origin = LatLng.builder()
-                .latitude(12.37133)
-                .longitude(76.4342)
-                .build();
-        LatLng destination = LatLng.builder()
-                .latitude(13.3434)
-                .longitude(77.3434)
-                .build();
+        LatLng origin = new LatLng();
+        origin.setLatitude(12.37133);
+        origin.setLongitude(76.4342);
+
+        LatLng destination = new LatLng();
+        destination.setLatitude(12.567153);
+        destination.setLongitude(76.537422);
 
         GoogleDirectionsRequest googleDirectionsRequest = GoogleDirectionsRequest.builder().origin(origin).destination(destination).build();
         locusTestApplication.getGoogleDirectionsResponse(googleDirectionsRequest);
     }
 
-    public void getGoogleDirectionsResponse(GoogleDirectionsRequest request){
+    public String createDirectionsRequestUrl(GoogleDirectionsRequest request){
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("key", "AIzaSyAEQvKUVouPDENLkQlCF6AAap1Ze-6zMos");
         queryParams.put("origin", request.getOrigin().getLatLngAsString());
@@ -48,12 +50,29 @@ public class LocusTestApplication{
             else
                 stringBuilder.append("&").append(key).append("=").append(val);
         });
+        return stringBuilder.toString();
+    }
 
-        String requestUrl = stringBuilder.toString();
+    public void getGoogleDirectionsResponse(GoogleDirectionsRequest request){
+
+        String requestUrl = createDirectionsRequestUrl(request);
         System.out.println("Url : "+requestUrl);
         HttpGet get = new HttpGet(requestUrl);
 
-
+        Client client = ClientBuilder.newClient();
+        try {
+//            Map<String, Object> response = client.target(requestUrl).request().get(HashMap.class);
+            GoogleDirectionsResponse response = client.target(requestUrl).request().get(GoogleDirectionsResponse.class);
+            System.out.println("got some response");
+            String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(response);
+//            List<Route> routes = (List<Route>) response.get("routes");
+//            objectMapper.readValue(json, GoogleDirectionsResponse.class);
+//            Map the response to the custom response DTO class
+            System.out.println(json);
+        }catch(Exception e){
+            System.out.println("Exception caught :: "+e.getMessage());
+            return;
+        }
     }
 
 

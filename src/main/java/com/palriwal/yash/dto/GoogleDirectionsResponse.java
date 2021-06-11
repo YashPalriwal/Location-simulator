@@ -13,12 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GoogleDirectionsResponse {
     @JsonProperty("geocoded_waypoints")
     private List<Object> geocodedWaypoints;
+    @JsonProperty("routes")
     private List<Route> routes;
+    @JsonProperty("status")
     private String status;
 }
