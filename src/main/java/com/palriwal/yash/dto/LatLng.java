@@ -25,5 +25,7 @@ public class LatLng {
         StringBuilder stringBuilder = new StringBuilder();
         if(Objects.isNull(latitude) || Objects.isNull(longitude))
             return null;
+        stringBuilder.append(latitude.toString()).append(",").append(longitude.toString());
+        return stringBuilder.toString();
     }
 }
