@@ -9,9 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.ws.rs.client.ClientBuilder;
 
 public class LocusTestApplication{
@@ -53,6 +51,20 @@ public class LocusTestApplication{
         return stringBuilder.toString();
     }
 
+    public List<LatLng> getFlagLatLngsOnPath(List<Steps> steps, LatLng startPoint, LatLng endPoint, Double flagDistance){
+        if(Objects.isNull(steps) || steps.isEmpty())
+            return null;
+        Double prevDistance = 0.0;
+        List<LatLng> flagLocations = new ArrayList<>();
+        for(Steps step : steps){
+            LatLng begin = step.getStartLocation();
+            LatLng end = step.getEndLocation();
+            Double stepDistance = step.getDistance().getValue();
+//            Integer numberOfFlagsOnStep = ((prevDistance+stepDistance)/flagDistance).intValue();
+        }
+        return flagLocations;
+    }
+
     public void getGoogleDirectionsResponse(GoogleDirectionsRequest request){
 
         String requestUrl = createDirectionsRequestUrl(request);
@@ -61,14 +73,9 @@ public class LocusTestApplication{
 
         Client client = ClientBuilder.newClient();
         try {
-//            Map<String, Object> response = client.target(requestUrl).request().get(HashMap.class);
             GoogleDirectionsResponse response = client.target(requestUrl).request().get(GoogleDirectionsResponse.class);
-            System.out.println("got some response");
-            String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(response);
-//            List<Route> routes = (List<Route>) response.get("routes");
-//            objectMapper.readValue(json, GoogleDirectionsResponse.class);
-//            Map the response to the custom response DTO class
-            System.out.println(json);
+            List<LatLng> result = getFlagLatLngsOnPath(response.getRoutes().get(0).getLegs().get(0).getSteps(), request.getOrigin(), request.getDestination(), 50.0);
+
         }catch(Exception e){
             System.out.println("Exception caught :: "+e.getMessage());
             return;
