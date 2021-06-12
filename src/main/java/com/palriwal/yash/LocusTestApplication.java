@@ -15,12 +15,18 @@ public class LocusTestApplication{
     public static void main(String[] args) throws Exception{
         LocusTestApplication locusTestApplication = new LocusTestApplication();
         LatLng origin = new LatLng();
-        origin.setLatitude(21.534018);
-        origin.setLongitude(84.338944);
-
         LatLng destination = new LatLng();
-        destination.setLatitude(8.873030);
-        destination.setLongitude(76.635256);
+
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter Origin latitude : ");
+        origin.setLatitude(in.nextDouble());
+        System.out.print("Enter Origin longitude : ");
+        origin.setLongitude(in.nextDouble());
+
+        System.out.print("Enter Destination latitude : ");
+        destination.setLatitude(in.nextDouble());
+        System.out.print("Enter Destination longitude : ");
+        destination.setLongitude(in.nextDouble());
 
         GoogleDirectionsRequest googleDirectionsRequest = GoogleDirectionsRequest.builder().origin(origin).destination(destination).build();
         locusTestApplication.getGoogleDirectionsResponse(googleDirectionsRequest);
