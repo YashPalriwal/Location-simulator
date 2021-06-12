@@ -18,5 +18,5 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DistanceDTO {
     private String text;
-    private Double value;
+    private Integer value;
 }

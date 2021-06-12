@@ -21,4 +21,6 @@ public class Route {
     @JsonProperty("waypoint_order")
     private List<Object> waypointOrder;
     private List<Legs> legs;
+    @JsonProperty("overview_polyline")
+    private PolylineDTO overviewPolyline;
 }

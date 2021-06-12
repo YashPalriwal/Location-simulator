@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,14 +19,18 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LatLng {
+    @JsonProperty("lat")
     private Double latitude;
+    @JsonProperty("lng")
     private Double longitude;
 
     public String getLatLngAsString(){
         StringBuilder stringBuilder = new StringBuilder();
         if(Objects.isNull(latitude) || Objects.isNull(longitude))
             return null;
-        stringBuilder.append(latitude.toString()).append(",").append(longitude.toString());
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        stringBuilder.append(df.format(latitude)).append(",").append(df.format(longitude));
         return stringBuilder.toString();
     }
 }

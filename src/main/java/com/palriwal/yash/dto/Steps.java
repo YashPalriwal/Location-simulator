@@ -23,4 +23,5 @@ public class Steps {
     private String htmlInstructions;
     @JsonProperty("travel_mode")
     private String travelMode;
+    private PolylineDTO polyline;
 }
