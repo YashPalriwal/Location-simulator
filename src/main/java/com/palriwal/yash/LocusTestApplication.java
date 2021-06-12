@@ -1,6 +1,5 @@
 package com.palriwal.yash;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.maps.internal.PolylineEncoding;
 import com.palriwal.yash.dto.*;
 import java.lang.String;
@@ -13,16 +12,15 @@ import static java.lang.StrictMath.asin;
 import static java.lang.StrictMath.pow;
 
 public class LocusTestApplication{
-    private ObjectMapper objectMapper = new ObjectMapper();
     public static void main(String[] args) throws Exception{
         LocusTestApplication locusTestApplication = new LocusTestApplication();
         LatLng origin = new LatLng();
-        origin.setLatitude(26.125175);
-        origin.setLongitude(85.385386);
+        origin.setLatitude(21.534018);
+        origin.setLongitude(84.338944);
 
         LatLng destination = new LatLng();
-        destination.setLatitude(26.133185);
-        destination.setLongitude(85.393527);
+        destination.setLatitude(8.873030);
+        destination.setLongitude(76.635256);
 
         GoogleDirectionsRequest googleDirectionsRequest = GoogleDirectionsRequest.builder().origin(origin).destination(destination).build();
         locusTestApplication.getGoogleDirectionsResponse(googleDirectionsRequest);
@@ -56,6 +54,9 @@ public class LocusTestApplication{
         for(Steps step : steps){
             wayPoints.addAll(PolylineEncoding.decode(step.getPolyline().getPoints()));
         }
+//        for(com.google.maps.model.LatLng latLng : wayPoints){
+//            System.out.println(latLng.lat+","+latLng.lng+",");
+//        }
         return wayPoints;
     }
 
@@ -96,21 +97,21 @@ public class LocusTestApplication{
         return flagLocations;
     }
 
-    public LatLng snapToNearestRoadPoint(LatLng point, List<com.google.maps.model.LatLng> polylinePointsOnStep){
-        LatLng result = new LatLng();
-        Double minDistance = Double.MAX_VALUE;
-        if(Objects.isNull(polylinePointsOnStep) || polylinePointsOnStep.isEmpty())
-            return null;
-        for(com.google.maps.model.LatLng roadPoint : polylinePointsOnStep){
-            Double approxDistance = haversineDistance(roadPoint.lat, roadPoint.lng, point.getLatitude(), point.getLongitude());
-            if(Double.compare( approxDistance, minDistance) < 0){
-                result.setLatitude(roadPoint.lat);
-                result.setLongitude(roadPoint.lng);
-                minDistance = approxDistance;
-            }
-        }
-        return result;
-    }
+//    public LatLng snapToNearestRoadPoint(LatLng point, List<com.google.maps.model.LatLng> polylinePointsOnStep){
+//        LatLng result = new LatLng();
+//        Double minDistance = Double.MAX_VALUE;
+//        if(Objects.isNull(polylinePointsOnStep) || polylinePointsOnStep.isEmpty())
+//            return null;
+//        for(com.google.maps.model.LatLng roadPoint : polylinePointsOnStep){
+//            Double approxDistance = haversineDistance(roadPoint.lat, roadPoint.lng, point.getLatitude(), point.getLongitude());
+//            if(Double.compare( approxDistance, minDistance) < 0){
+//                result.setLatitude(roadPoint.lat);
+//                result.setLongitude(roadPoint.lng);
+//                minDistance = approxDistance;
+//            }
+//        }
+//        return result;
+//    }
 
     public Double haversineDistance(Double lat1, Double lon1, Double lat2, Double lon2){
         {
@@ -140,6 +141,9 @@ public class LocusTestApplication{
         Long distanceFromEnd = stepDistance - distanceFromStart;
         if(!(Double.compare(stepDistance, 0.0) > 0))
             return null;
+        /*
+        *   x_ = (m2*x1 + m1*x2)/(m1+m2);
+         */
         Double flagLatitude = ((startPoint.getLatitude()*distanceFromEnd) + (endPoint.getLatitude()*distanceFromStart))/stepDistance;
         Double flagLongitude = ((startPoint.getLongitude()*distanceFromEnd) + (endPoint.getLongitude()*distanceFromStart))/stepDistance;
         flagCoordinates.setLatitude(flagLatitude);
@@ -162,7 +166,8 @@ public class LocusTestApplication{
         Client client = ClientBuilder.newClient();
         try {
             GoogleDirectionsResponse response = client.target(requestUrl).request().get(GoogleDirectionsResponse.class);
-            List<LatLng> result = getFlagLatLngsOnPath(response.getRoutes().get(0).getLegs().get(0).getSteps(), request.getOrigin(), request.getDestination(), 50L);
+            // For two points
+            List<LatLng> result = getFlagLatLngsOnPath(response.getRoutes().get(0).getLegs().get(0).getSteps(), request.getOrigin(), request.getDestination(), 10000L);
             printPretty(result);
         }catch(Exception e){
             System.out.println("Exception caught :: "+e.getMessage() + e.getStackTrace());
