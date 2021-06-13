@@ -12,13 +12,4 @@ public class LocusTestApplication{
         FlagResponseAggregator flagResponseAggregator = new FlagResponseAggregator();
         ResponseUtils.printPretty(flagResponseAggregator.getFlagCoordinateResponse(InputUtils.getInputFromConsole()));
     }
-
-
-
-
-
-
-
-
-
 }
