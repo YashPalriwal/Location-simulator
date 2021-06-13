@@ -2,6 +2,8 @@ package com.palriwal.yash.service.distance;
 
 import com.palriwal.yash.dto.LatLng;
 
+import java.util.Objects;
+
 import static java.lang.Math.*;
 import static java.lang.StrictMath.asin;
 import static java.lang.StrictMath.pow;
@@ -16,6 +18,9 @@ public class HaversineDistanceServiceImpl implements DistanceService{
             double lon1 = origin.getLongitude();
             double lat2 = destination.getLatitude();
             double lon2 = destination.getLongitude();
+
+            if(Objects.isNull(origin) || Objects.isNull(destination) || origin.equals(destination))
+                return 0.0;
 
             double dLat = (lat2 - lat1) *
                     PI / 180.0;

@@ -4,7 +4,7 @@ import com.palriwal.yash.dto.LatLng;
 
 public class LineDivisionComputeFlagCoordinateServiceImpl implements ComputeFlagCoordinateService{
     @Override
-    public LatLng getFlagLatLng(LatLng startPoint, LatLng endPoint, Long distanceFromStart, Long stepDistance){
+    public LatLng getFlagLatLng(LatLng startPoint, LatLng endPoint, Double distanceFromStart, Double stepDistance){
 
         /*
          *   Coordinates of point(x,y) lying on line segment AB where A = (x1,y1) and B = (x2,y2)
@@ -18,7 +18,7 @@ public class LineDivisionComputeFlagCoordinateServiceImpl implements ComputeFlag
         if(startPoint.equals(endPoint))
             return startPoint;          // Avoiding division by 0 case
         LatLng flagCoordinates = new LatLng();
-        Long distanceFromEnd = stepDistance - distanceFromStart;
+        Double distanceFromEnd = stepDistance - distanceFromStart;
         if(!(Double.compare(stepDistance, 0.0) > 0))
             return null;
         Double flagLatitude = ((startPoint.getLatitude()*distanceFromEnd) + (endPoint.getLatitude()*distanceFromStart))/stepDistance;

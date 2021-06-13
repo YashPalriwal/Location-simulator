@@ -1,6 +1,7 @@
 package com.palriwal.yash.aggregator;
 
 import com.palriwal.yash.api.GoogleDirectionsApi;
+import com.palriwal.yash.config.ConstantsAndConfig;
 import com.palriwal.yash.dto.GoogleDirectionsRequest;
 import com.palriwal.yash.dto.GoogleDirectionsResponse;
 import com.palriwal.yash.dto.LatLng;
@@ -28,12 +29,11 @@ public class FlagResponseAggregator {
             return null;
         }
         GoogleDirectionsResponse response = directionsApi.getGoogleDirectionsApiResponse(request);
-        Long flagDistance = 50L; // get from config
 
         if(!Objects.isNull(response) && !Objects.isNull(response.getRoutes()) && !response.getRoutes().isEmpty())
         {
             List<com.google.maps.model.LatLng> waypoints = wayPointService.getWaypoints(response.getRoutes().get(0));
-            List<LatLng> flagCoordinates = flagPointService.getFlagLatLngOnPath(waypoints, request.getOrigin(), request.getDestination(), flagDistance);
+            List<LatLng> flagCoordinates = flagPointService.getFlagLatLngOnPath(waypoints, request.getOrigin(), request.getDestination(), ConstantsAndConfig.FLAG_DISTANCE);
             return flagCoordinates;
         }
         return null;

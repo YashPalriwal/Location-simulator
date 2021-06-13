@@ -1,5 +1,6 @@
 package com.palriwal.yash.api;
 
+import com.palriwal.yash.config.ConstantsAndConfig;
 import com.palriwal.yash.dto.GoogleDirectionsRequest;
 import com.palriwal.yash.dto.GoogleDirectionsResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -26,24 +27,22 @@ public class GoogleDirectionsApi {
 
     private String createDirectionsRequestUrl(GoogleDirectionsRequest request){
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("key", "AIzaSyAEQvKUVouPDENLkQlCF6AAap1Ze-6zMos");      // keep in config
+        queryParams.put("key", ConstantsAndConfig.DIRECTIONS_API_KEY);      // keep in config
         queryParams.put("origin", request.getOrigin().getLatLngAsString());
         queryParams.put("destination", request.getDestination().getLatLngAsString());
 
-        String baseUrl = "https://maps.googleapis.com";     // keep in config
-        String endPoint = "/maps/api/directions/json";      // keep in config
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(baseUrl).append(endPoint);
+        StringBuilder requestUrl = new StringBuilder();
+        requestUrl.append(ConstantsAndConfig.DIRECTIONS_API_HOST).append(ConstantsAndConfig.DIRECTIONS_API_ENDPOINT);
 
         final Boolean[] firstElement = {true};
         queryParams.forEach((key,val) -> {
             if(firstElement[0]){
-                stringBuilder.append("?").append(key).append("=").append(val);
+                requestUrl.append("?").append(key).append("=").append(val);
                 firstElement[0] = false;
             }
             else
-                stringBuilder.append("&").append(key).append("=").append(val);
+                requestUrl.append("&").append(key).append("=").append(val);
         });
-        return stringBuilder.toString();
+        return requestUrl.toString();
     }
 }
