@@ -2,6 +2,8 @@ package com.palriwal.yash;
 
 import com.google.maps.internal.PolylineEncoding;
 import com.palriwal.yash.dto.*;
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.String;
 import javax.ws.rs.client.Client;
 import java.util.*;
@@ -11,12 +13,13 @@ import static java.lang.Math.*;
 import static java.lang.StrictMath.asin;
 import static java.lang.StrictMath.pow;
 
+@Slf4j
 public class LocusTestApplication{
     public static void main(String[] args) throws Exception{
         LocusTestApplication locusTestApplication = new LocusTestApplication();
         LatLng origin = new LatLng();
         LatLng destination = new LatLng();
-
+        log.info("Started Application");
         Scanner in = new Scanner(System.in);
         System.out.print("Enter Origin latitude : ");
         origin.setLatitude(in.nextDouble());
