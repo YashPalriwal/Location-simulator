@@ -30,8 +30,8 @@ public class GoogleDirectionsApi {
         queryParams.put("origin", request.getOrigin().getLatLngAsString());
         queryParams.put("destination", request.getDestination().getLatLngAsString());
 
-        String baseUrl = "https://maps.googleapis.com";     // Put these things in config
-        String endPoint = "/maps/api/directions/json";
+        String baseUrl = "https://maps.googleapis.com";     // keep in config
+        String endPoint = "/maps/api/directions/json";      // keep in config
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(baseUrl).append(endPoint);
 
