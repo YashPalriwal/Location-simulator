@@ -10,9 +10,7 @@ import java.lang.String;
 public class LocusTestApplication{
     public static void main(String[] args){
         FlagResponseAggregator flagResponseAggregator = new FlagResponseAggregator();
-        ResponseUtils responseUtils = new ResponseUtils();
-        InputUtils inputUtils = new InputUtils();
-        responseUtils.printPretty(flagResponseAggregator.getFlagCoordinateResponse(inputUtils.getInputFromConsole()));
+        ResponseUtils.printPretty(flagResponseAggregator.getFlagCoordinateResponse(InputUtils.getInputFromConsole()));
     }
 
 

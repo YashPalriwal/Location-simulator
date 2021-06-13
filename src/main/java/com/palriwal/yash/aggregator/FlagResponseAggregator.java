@@ -28,7 +28,7 @@ public class FlagResponseAggregator {
             return null;
         }
         GoogleDirectionsResponse response = directionsApi.getGoogleDirectionsApiResponse(request);
-        Long flagDistance = 1500L; // get from config
+        Long flagDistance = 50L; // get from config
 
         if(!Objects.isNull(response) && !Objects.isNull(response.getRoutes()) && !response.getRoutes().isEmpty())
         {

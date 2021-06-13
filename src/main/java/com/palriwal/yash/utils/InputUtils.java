@@ -9,7 +9,7 @@ import java.util.Scanner;
 @Slf4j
 public class InputUtils {
 
-    public GoogleDirectionsRequest getInputFromConsole(){
+    public static GoogleDirectionsRequest getInputFromConsole(){
         LatLng origin = new LatLng();
         LatLng destination = new LatLng();
         log.debug("Started Application...");
