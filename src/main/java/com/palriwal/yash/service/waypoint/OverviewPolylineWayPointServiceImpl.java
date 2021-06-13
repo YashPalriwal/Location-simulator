@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class OverviewPolylineWaypointServiceImpl implements waypointService{
+public class OverviewPolylineWayPointServiceImpl implements WayPointService {
     @Override
     public List<LatLng> getWaypoints(Route route) {
         if(Objects.isNull(route) || Objects.isNull(route.getOverviewPolyline()) || Objects.isNull(route.getOverviewPolyline().getPoints()))

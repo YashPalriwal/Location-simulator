@@ -1,4 +1,4 @@
-package com.palriwal.yash.service.Distance;
+package com.palriwal.yash.service.distance;
 
 import com.palriwal.yash.dto.LatLng;
 

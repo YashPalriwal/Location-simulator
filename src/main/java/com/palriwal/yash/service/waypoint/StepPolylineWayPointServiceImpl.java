@@ -1,7 +1,6 @@
 package com.palriwal.yash.service.waypoint;
 
 import com.google.maps.internal.PolylineEncoding;
-import com.google.maps.model.LatLng;
 import com.palriwal.yash.dto.Legs;
 import com.palriwal.yash.dto.Route;
 import com.palriwal.yash.dto.Steps;
@@ -12,7 +11,7 @@ import java.util.Objects;
 import java.util.List;
 
 @Slf4j
-public class StepPolylineWaypointServiceImpl implements waypointService{
+public class StepPolylineWayPointServiceImpl implements WayPointService {
     @Override
     public List<com.google.maps.model.LatLng> getWaypoints(Route route){
         if(Objects.isNull(route) || Objects.isNull(route.getLegs()) || route.getLegs().isEmpty())

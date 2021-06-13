@@ -3,6 +3,6 @@ import com.palriwal.yash.dto.Route;
 
 import java.util.List;
 
-public interface waypointService {
+public interface WayPointService {
     List<com.google.maps.model.LatLng> getWaypoints(Route route);
 }
