@@ -7,7 +7,6 @@ import com.palriwal.yash.service.flagPoint.FlagPointService;
 import com.palriwal.yash.service.flagPoint.QueueStrategyFlagPointServiceImpl;
 import com.palriwal.yash.service.waypoint.StepPolylineWayPointServiceImpl;
 import com.palriwal.yash.service.waypoint.WayPointService;
-import com.palriwal.yash.utils.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.ws.rs.client.Client;
@@ -21,7 +20,6 @@ import java.util.Objects;
 public class FlagResponseAggregator {
     private FlagPointService flagPointService = new QueueStrategyFlagPointServiceImpl();
     private WayPointService wayPointService = new StepPolylineWayPointServiceImpl();
-    private ResponseUtils responseUtils = new ResponseUtils();
 
     public List<LatLng> getFlagCoordinateResponse(GoogleDirectionsRequest request){
         if(Objects.isNull(request) || Objects.isNull(request.getOrigin()) || Objects.isNull(request.getDestination()))
@@ -29,10 +27,8 @@ public class FlagResponseAggregator {
             log.error("Bad Request");
             return null;
         }
-
-
         String requestUrl = createDirectionsRequestUrl(request);
-        System.out.println("Url : "+requestUrl);
+        log.info("Url : {}", requestUrl);
         Client client = ClientBuilder.newClient();
         GoogleDirectionsResponse response = client.target(requestUrl).request().get(GoogleDirectionsResponse.class);
         //   should get from HTTPUtils
