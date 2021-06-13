@@ -25,3 +25,19 @@ public class OverviewPolylineWayPointServiceImpl implements WayPointService {
         return wayPoints;
     }
 }
+
+//    public LatLng snapToNearestRoadPoint(LatLng point, List<com.google.maps.model.LatLng> polylinePointsOnStep){
+//        LatLng result = new LatLng();
+//        Double minDistance = Double.MAX_VALUE;
+//        if(Objects.isNull(polylinePointsOnStep) || polylinePointsOnStep.isEmpty())
+//            return null;
+//        for(com.google.maps.model.LatLng roadPoint : polylinePointsOnStep){
+//            Double approxDistance = haversineDistance(roadPoint.lat, roadPoint.lng, point.getLatitude(), point.getLongitude());
+//            if(Double.compare( approxDistance, minDistance) < 0){
+//                result.setLatitude(roadPoint.lat);
+//                result.setLongitude(roadPoint.lng);
+//                minDistance = approxDistance;
+//            }
+//        }
+//        return result;
+//    }
