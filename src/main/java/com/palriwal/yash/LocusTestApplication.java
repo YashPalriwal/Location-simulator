@@ -17,7 +17,7 @@ public class LocusTestApplication{
         responseUtils.printPretty(flagResponseAggregator.getFlagCoordinateResponse(locusTestApplication.getInputFromConsole()));
     }
 
-    GoogleDirectionsRequest getInputFromConsole(){
+    private GoogleDirectionsRequest getInputFromConsole(){
         LatLng origin = new LatLng();
         LatLng destination = new LatLng();
         log.debug("Started Application...");
